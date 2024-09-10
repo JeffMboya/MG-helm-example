@@ -3,6 +3,91 @@ entries:
   magistrala:
   - apiVersion: v2
     appVersion: 0.12.2
+    created: "2024-09-10T07:58:46.268647211Z"
+    dependencies:
+    - name: nats
+      repository: '@nats'
+      version: 1.2.1
+    - name: jaeger
+      repository: '@jaegertracing'
+      version: 3.1.1
+    - alias: postgresqlauth
+      condition: postgresqlauth.enabled
+      name: postgresql
+      repository: '@bitnami'
+      version: 12.5.6
+    - alias: postgresqlspicedb
+      condition: postgresqlspicedb.enabled
+      name: postgresql
+      repository: '@bitnami'
+      version: 12.5.6
+    - alias: postgresqlthings
+      condition: postgresqlthings.enabled
+      name: postgresql
+      repository: '@bitnami'
+      version: 12.5.6
+    - alias: postgresqlusers
+      condition: postgresqlusers.enabled
+      name: postgresql
+      repository: '@bitnami'
+      version: 12.5.6
+    - alias: postgresqlbootstrap
+      condition: postgresqlbootstrap.enabled
+      name: postgresql
+      repository: '@bitnami'
+      version: 12.5.6
+    - alias: postgresqlcerts
+      condition: postgresqlcerts.enabled
+      name: postgresql
+      repository: '@bitnami'
+      version: 12.5.6
+    - alias: postgresqlinvitations
+      condition: postgresqlinvitations.enabled
+      name: postgresql
+      repository: '@bitnami'
+      version: 12.5.6
+    - alias: postgresqljournal
+      condition: postgresqljournal.enabled
+      name: postgresql
+      repository: '@bitnami'
+      version: 12.5.6
+    - alias: timescaledb
+      condition: timescaledb.enabled
+      name: postgresql
+      repository: '@bitnami'
+      version: 12.5.6
+    - alias: postgresqlui
+      condition: postgresqlui.enabled
+      name: postgresql
+      repository: '@bitnami'
+      version: 12.5.6
+    - alias: redis-things
+      name: redis
+      repository: '@bitnami'
+      version: 19.6.2
+    - alias: vault
+      condition: vault.enabled
+      name: vault
+      repository: '@hashicorp'
+      version: 0.28.1
+    description: Magistrala IoT Platform
+    digest: b1618f975ce6416a112317a43c5a107c0c5970a2b818d88df9be9f487bb96017
+    home: https://abstractmachines.fr/magistrala.html
+    icon: https://avatars1.githubusercontent.com/u/13207490
+    maintainers:
+    - email: draasko.draskovic@abstractmachines.fr
+      name: drasko
+    - email: dusan.borovcanin@abstractmachines.fr
+      name: dusan
+    name: magistrala
+    sources:
+    - https://hub.docker.com/u/magistrala
+    type: application
+    urls:
+    - https://github.com/JeffMboya/MG-helm-example/releases/download/magistrala-1.0.6/magistrala-1.0.6.tgz
+    version: 1.0.6
+  - apiVersion: v2
+    appVersion: 0.12.2
     created: "2024-09-09T14:12:59.242372042Z"
     dependencies:
     - name: nats
@@ -86,4 +171,4 @@ entries:
     urls:
     - https://github.com/JeffMboya/MG-helm-example/releases/download/magistrala-1.0.5/magistrala-1.0.5.tgz
     version: 1.0.5
-generated: "2024-09-09T14:12:59.242381399Z"
+generated: "2024-09-10T07:58:46.268659965Z"
