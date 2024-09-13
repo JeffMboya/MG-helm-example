@@ -6,7 +6,7 @@ name: Generate Helm Docs
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   generate-docs:
