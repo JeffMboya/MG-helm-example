@@ -1,0 +1,35 @@
+# Copyright (c) Magistrala
+# SPDX-License-Identifier: Apache-2.0
+
+name: Generate Helm Docs
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  generate-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.repository }}
+          ref: ${{ github.ref }}
+          fetch-depth: 0
+
+      - name: Generate Helm Docs
+        id: helm-docs
+        uses: losisin/helm-docs-github-action@v1.3.1
+        with:
+          chart-search-root: "charts/magistrala"
+          values-file: "values.yaml"
+          output-file: "README.md"
+          template-files: "README.md.gotmpl"
+          git-push: false
+          fail-on-diff: true
+
+      - name: Show README diff
+        if: failure() && steps.helm-docs.outcome == 'failure'
+        run: git diff charts/magistrala/README.md || echo "No git diff available."
