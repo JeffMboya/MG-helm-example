@@ -14,6 +14,10 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Install doctl
+        run: |
+          sudo snap install doctl
+
       - name: Authenticate with DigitalOcean
         run: |
           echo "${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}" | doctl auth init --access-token
