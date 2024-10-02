@@ -20,7 +20,7 @@ jobs:
 
       - name: Authenticate with DigitalOcean
         run: |
-          echo "${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}" | doctl auth init --access-token
+          doctl auth init --access-token ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
           doctl kubernetes cluster kubeconfig save amdm-cluster
 
       - name: Set up Helm
