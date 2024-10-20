@@ -1,0 +1,50 @@
+# Copyright (c) Abstract Machines
+# SPDX-License-Identifier: Apache-2.0
+
+name: License Header Check
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  check-license:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set Exclude Patterns
+        id: vars
+        run: |
+          echo "exclude_dirs='.git build **vernemq**'"
+          echo "exclude_files='*.crt *.key *.pem *.zed *.hcl *.md *.json *.csv *.mod *.sum *.tmpl *.args CODEOWNERS LICENSE MAINTAINERS'"
+        shell: bash
+
+      - name: Check License Header
+        run: |
+          missing_license_files=$(find . -type f \
+            -not -path "./${{ steps.vars.outputs.exclude_dirs }}" \
+            \( ! -name ${{ steps.vars.outputs.exclude_files }} \) \
+            -exec grep -L "Copyright (c) Abstract Machines" {} +)
+
+          if [ -n "$missing_license_files" ]; then
+            echo "License header check failed in the following files:"
+            echo "$missing_license_files"
+            exit 1
+          else
+            echo "All files have the correct license header."
+          fi
+        shell: bash
+
+      - name: Annotate Failure (if any)
+        if: failure()
+        run: |
+          echo "$missing_license_files" | while read -r file; do
+            echo "::error file=$file::Missing license header in $file"
+          done
+        shell: bash
