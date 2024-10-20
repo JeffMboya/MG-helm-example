@@ -21,15 +21,20 @@ jobs:
       - name: Set Exclude Patterns
         id: vars
         run: |
-          echo "exclude_dirs='.git build **vernemq**'"
-          echo "exclude_files='*.crt *.key *.pem *.zed *.hcl *.md *.json *.csv *.mod *.sum *.tmpl *.args CODEOWNERS LICENSE MAINTAINERS'"
+          exclude_dirs='.git build **vernemq**'
+          exclude_files='*.crt *.key *.pem *.zed *.hcl *.md *.json *.csv *.mod *.sum *.tmpl *.args CODEOWNERS LICENSE MAINTAINERS'
+          echo "exclude_dirs=$exclude_dirs"
+          echo "exclude_files=$exclude_files"
         shell: bash
 
       - name: Check License Header
         run: |
           missing_license_files=$(find . -type f \
-            -not -path "./${{ steps.vars.outputs.exclude_dirs }}" \
-            \( ! -name ${{ steps.vars.outputs.exclude_files }} \) \
+            -not \( -path "./.git*" -o -path "./build*" -o -path "./**vernemq**" \) \
+            \( ! -name "*.crt" -a ! -name "*.key" -a ! -name "*.pem" -a ! -name "*.zed" \
+            -a ! -name "*.hcl" -a ! -name "*.md" -a ! -name "*.json" -a ! -name "*.csv" \
+            -a ! -name "*.mod" -a ! -name "*.sum" -a ! -name "*.tmpl" -a ! -name "*.args" \
+            -a ! -name "CODEOWNERS" -a ! -name "LICENSE" -a ! -name "MAINTAINERS" \) \
             -exec grep -L "Copyright (c) Abstract Machines" {} +)
 
           if [ -n "$missing_license_files" ]; then
